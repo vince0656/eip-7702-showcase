@@ -1,0 +1,14 @@
+{
+  "name": "eip-7702-script",
+  "version": "1.0.0",
+  "description": "Examples of how to use viem to interact with EIP7702",
+  "main": "invoke.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vincent Almeida",
+  "license": "MIT",
+  "dependencies": {
+    "viem": "^2.21.44"
+  }
+}

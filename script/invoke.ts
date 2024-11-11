@@ -1,21 +1,3 @@
-# EIP 7702 Showcase
-
-Taking EIP7702 for a spin on devnet launched for Devcon 7 SEA: `Mekong`.
-
-The project consists of very primitive Solidity smart contracts as well as a `viem` based script that abstracts away the EIP-7702 complexities associated with the new transaction type.
-
-## Smart Contracts
-The smart contracts be found in [`smart-contracts`](./smart-contracts/) which use the foundry framework
-
-Due to the use of `transient` storage, you may be required to use the following build command:
-```
-FOUNDRY_EVM_VERSION=cancun forge build
-```
-
-## Viem script
-
-The main script is [`invoke.ts`](./script/invoke.ts):
-```
 import { parseEther } from 'viem'
 import { walletClient } from './wallet'
 import { abi, contractAddress } from './contract'
@@ -52,4 +34,3 @@ async function main() {
 main();
 
 // Based on: https://viem.sh/experimental/eip7702/contract-writes
-```
