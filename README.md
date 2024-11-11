@@ -15,7 +15,7 @@ FOUNDRY_EVM_VERSION=cancun forge build
 ## Viem script
 
 The main script is [`invoke.ts`](./script/invoke.ts):
-```
+```typescript
 import { parseEther } from 'viem'
 import { walletClient } from './wallet'
 import { abi, contractAddress } from './contract'
