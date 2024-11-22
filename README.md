@@ -12,9 +12,28 @@ Due to the use of `transient` storage, you may be required to use the following 
 FOUNDRY_EVM_VERSION=cancun forge build
 ```
 
+or alternatively:
+```
+forge build --evm-version cancun
+```
+
+## Example 1: Pre and Post Transaction checks
+
+These smart contracts allow selective transaction execution where organisational rules are encoded to be checked before a set of transactions and then after. 
+
+## Example 2: No ETH account
+
+A way for operational transactions to be executed by an authorized EOA with the gas paid by a known treasury, refunding any change back to the treasury.
+
+This is different to the concept of a GAS station network because we are not aiming for a protocol paying for a user's transactions (which comes with complex infra). It is more likely that such a solution
+would be used witin a single organisation where perhaps a development team are attempting to deploy a smart contract or exeucte operations and an organisation does not want
+to concern itself with distributing ETH to various wallets for that purpose and then have to deal with ensuring the funds are returned afterwards. EIP7702 using the smart contracts
+in Example 2 simplifies this situation by keeping the treasury and operational EOAs seperate. It ensures that any EOA authorised to use the treasury for transactions will not
+be left with any ETH that they later need to keep track of and the authorisation is only valid for one transaction ensuring the door is not left open for abuse.
+
 ## Viem script
 
-The main script is [`invoke.ts`](./script/invoke.ts):
+The main script for executing a smart contract from an EOA is [`invoke.ts`](./script/invoke.ts):
 ```typescript
 import { parseEther } from 'viem'
 import { walletClient } from './wallet'
