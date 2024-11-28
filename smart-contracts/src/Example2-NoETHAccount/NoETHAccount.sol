@@ -21,13 +21,17 @@ contract NoETHAccount is Transactions {
     /// @notice Arbitrary max amount that will be pulled from the treasury and assumes transaction will execute within the budget
     uint256 public maxWETHPerTransaction;
 
-    constructor(address treasury_, IWETH wETH_, uint256 maxWETHPerTransaction_) {
+    /// @notice Whether an authorisation to use this code with EIP7702 would allow ETH balance to be spent by the transaction OPs
+    bool public allowTransactionsWithValue;
+
+    constructor(address treasury_, IWETH wETH_, uint256 maxWETHPerTransaction_, bool allowTransactionsWithValue_) {
         if (treasury_ == address(0)) revert ZeroAddress();
         if (address(wETH_) == address(0)) revert ZeroAddress();
         if (maxWETHPerTransaction_ == 0) revert ZeroBudget();
         treasury = treasury_;
         wETH = wETH_;
         maxWETHPerTransaction = maxWETHPerTransaction_;
+        allowTransactionsWithValue = allowTransactionsWithValue_;
     }
 
     /// @notice Use an EOA for a specific batch of transactions where a treasury funds a transaction and the EOA refunds the treasury of any change making operational management of EOAs more straightforward
@@ -39,7 +43,7 @@ contract NoETHAccount is Transactions {
         // Execute the transactions (could be a deployment for example where a treasury trustlessly pays for the deployment GAS)
         for (uint256 i; i < transactions.length; ++i) {
             Transaction memory transaction = transactions[i];
-            executeTransaction(transaction);
+            executeTransaction(transaction, allowTransactionsWithValue);
         }
 
         // Return any unused funds such that the EOA at the end of the transaction remains with NO ETH in its possession allowing the EOA to be thrown away 
