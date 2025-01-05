@@ -3,6 +3,7 @@ src = 'src'
 out = 'out'
 test = 'test'
 libs = ['lib']
+evm_version = 'cancun'
 
 remappings = [
   '@contracts=src',
